@@ -1,31 +1,28 @@
-# path-based-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-ingress
+  namespace: ingress-sample3
   annotations:
-    # kubernetes.io/ingress.class: "nginx"
-    # This annotation is important for path-based routing.
-    # It tells the Ingress Controller to remove the `/whoami` path from the request
-    # before forwarding it to the backend service. This is because the `whoami` service
-    # doesn't expect `/whoami` to be part of the request path.
-    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # Add this line to specify the Ingress class
+    kubernetes.io/ingress.class: "nginx"
+    # The existing last-applied-configuration annotation can be ignored
 spec:
   rules:
-  - host: myapp1.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-service
-            port:
-              number: 80
-      - path: /whoami
-        pathType: Prefix
-        backend:
-          service:
-            name: whoami-service
-            port:
-              number: 80
+    - host: myapp1.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80
+          - path: /whoami
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami-service
+                port:
+                  number: 80
