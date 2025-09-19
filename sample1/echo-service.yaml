@@ -13,8 +13,8 @@ spec:
         app: echo
     spec:
       containers:
-      - name: echo-container
-        image: k8s.gcr.io/echoserver:1.4
+      - name: ngnix
+        image: nginx:1.14.2
         ports:
         - containerPort: 8080
 ---
