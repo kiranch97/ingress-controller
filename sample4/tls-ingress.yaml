@@ -1,0 +1,36 @@
+# tls-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress-tls
+  namespace: ingress-sample3
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    # This annotation tells Cert-Manager which issuer to use.
+    cert-manager.io/cluster-issuer: "selfsigned-issuer"
+    # This annotation automatically redirects HTTP to HTTPS.
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  # This block tells the Ingress controller to secure traffic.
+  tls:
+  - hosts:
+    - myapp2.example.com
+    secretName: myapp2-tls-secret # Cert-Manager will create and manage this secret.
+  rules:
+  - host: myapp2.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+      - path: /whoami
+        pathType: Prefix
+        backend:
+          service:
+            name: whoami-service
+            port:
+              number: 80
