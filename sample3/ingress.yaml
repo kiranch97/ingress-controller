@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: path-based-ingress
+  name: ingress-sample3
   annotations:
     kubernetes.io/ingress.class: "nginx"
     # This annotation is important for path-based routing.
