@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: my-first-topic
+  namespace: kafka-sample1
+  labels:
+    strimzi.io/cluster: my-first-kafka-cluster # This label is crucial! It tells Strimzi which Kafka cluster to create the topic in.
+spec:
+  partitions: 3
+  replicas: 3
