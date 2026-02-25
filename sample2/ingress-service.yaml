@@ -2,13 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-ingress
+  namespace: ingress-sample
   annotations:
-    # This annotation is specific to the NGINX Ingress Controller.
-    # It ensures the Ingress Controller processes this Ingress resource.
-    kubernetes.io/ingress.class: "nginx" 
+    # Specifies the OCID of the existing public subnet where the LB will be created
+    oci.oraclecloud.com/load-balancer-subnet-id: "ocid1.subnet.oc1.iad.xxxxx" 
+    # Optional: Controls whether the LB is public or private (default is public)
+    oci.oraclecloud.com/load-balancer-is-private: "false"
 spec:
+  # Crucial: Change this from 'nginx' to the OCI class name
+  ingressClassName: oci-native-ingress 
   rules:
-  - host: myapp.example.com # Replace with your desired hostname
+  - host: myapp.example.com
     http:
       paths:
       - path: /
